@@ -78,3 +78,4 @@ phpcs.xml
 # End of https://www.toptal.com/developers/gitignore/api/phpunit,phpcodesniffer,visualstudiocode,macos
 
 .idea
+.php-cs-fixer.cache

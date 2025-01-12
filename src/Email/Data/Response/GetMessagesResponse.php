@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace TempMailIo\TempMailPhp\Email\Data\Response;
 

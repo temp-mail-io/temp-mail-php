@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace TempMailIo\TempMailPhp;
 
@@ -48,7 +50,7 @@ abstract class Data
 
             if (str_contains($type, '[]')) {
                 /** @phpstan-ignore property.dynamicName */
-                $data[$snakeCaseKey] = array_map(fn($item) => $item->toArray(), $this->$key);
+                $data[$snakeCaseKey] = array_map(fn ($item) => $item->toArray(), $this->$key);
 
                 continue;
             }
@@ -76,7 +78,7 @@ abstract class Data
                 $className = str_replace('[]', '', $type);
                 $className = ltrim($className, '\\');
                 /** @phpstan-ignore property.dynamicName */
-                $this->$key = array_map(fn($item) => (new $className)->fromArray($item), $incomingData[$snakeCaseKey]);
+                $this->$key = array_map(fn ($item) => (new $className())->fromArray($item), $incomingData[$snakeCaseKey]);
 
                 continue;
             }

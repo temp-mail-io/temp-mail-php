@@ -61,7 +61,7 @@ class ClientGetMessagesTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(),'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
         $response = $client->getMessages('test@example.com');
 

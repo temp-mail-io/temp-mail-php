@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace TempMailIo\TempMailPhp\Email;
 
@@ -24,8 +26,7 @@ class Client implements ClientInterface
         private readonly GuzzleClientInterface $guzzleClient,
         private readonly RateLimitReader       $rateLimitReader,
         private readonly string                $apiKey,
-    )
-    {
+    ) {
     }
 
     /**
