@@ -1,4 +1,4 @@
-name: tests
+name: CI
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  phpunit:
+  ci:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,3 +27,7 @@ jobs:
 
       - name: Run PHPUnit
         run: vendor/bin/phpunit tests
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse src
+
