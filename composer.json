@@ -1,0 +1,27 @@
+{
+  "name": "temp-mail-io/temp-mail-php",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "TempMailIo\\TempMailPhp\\": "src/",
+      "Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+    "guzzlehttp/guzzle": "^7.9",
+    "phpdocumentor/reflection-docblock": "^5.6"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^2.1",
+    "phpstan/phpstan-strict-rules": "^2.0",
+    "phpunit/phpunit": "^11.5",
+    "phpstan/extension-installer": "^1.4"
+  },
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
+  }
+}
