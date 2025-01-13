@@ -31,3 +31,8 @@ jobs:
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse src
 
+      - name: Run PHP CS Fixer
+        run: PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer check src
+
+      - name: Run PHP CS Fixer for tests
+        run: PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer check tests
