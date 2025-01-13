@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TempMailIo\TempMailPhp\Domain\Data\Response;
+namespace TempMailIo\TempMailPhp\Message\Data\Response;
 
 use TempMailIo\TempMailPhp\Data;
 use TempMailIo\TempMailPhp\GenericData\ErrorResponse;
 
-class GetAvailableDomainResponse extends Data
+class DownloadAttachmentResponse extends Data
 {
-    public ?GetAvailableDomainsSuccessResponse $successResponse = null;
+    public ?DownloadAttachmentSuccessResponse $successResponse = null;
 
     public ?ErrorResponse $errorResponse = null;
 }

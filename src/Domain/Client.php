@@ -12,15 +12,16 @@ use TempMailIo\TempMailPhp\Constants;
 use TempMailIo\TempMailPhp\Domain\Data\Response\GetAvailableDomainResponse;
 use TempMailIo\TempMailPhp\Domain\Data\Response\GetAvailableDomainsSuccessResponse;
 use TempMailIo\TempMailPhp\GenericData\ErrorResponse;
-use TempMailIo\TempMailPhp\RateLimitReader;
+use TempMailIo\TempMailPhp\RateLimitReaderInterface;
 
 class Client implements ClientInterface
 {
     public function __construct(
-        private readonly GuzzleClientInterface $guzzleClient,
-        private readonly RateLimitReader       $rateLimitReader,
-        private readonly string                $apiKey,
-    ) {
+        private readonly GuzzleClientInterface    $guzzleClient,
+        private readonly RateLimitReaderInterface $rateLimitReader,
+        private readonly string                   $apiKey,
+    )
+    {
     }
 
     /**

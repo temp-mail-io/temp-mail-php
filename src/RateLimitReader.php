@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TempMailIo\TempMailPhp;
 
 use TempMailIo\TempMailPhp\GenericData\RateLimit;
 
-class RateLimitReader
+class RateLimitReader implements RateLimitReaderInterface
 {
     /**
      * @throws \ReflectionException

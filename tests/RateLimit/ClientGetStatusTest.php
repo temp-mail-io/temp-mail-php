@@ -30,6 +30,7 @@ class ClientGetStatusTest extends TestCase
         $response = $client->getStatus();
 
         $this->assertInstanceOf(GetStatusResponse::class, $response);
+        $this->assertNull($response->errorResponse);
         $this->assertNotNull($response->successResponse);
         $this->assertEquals($status, $response->successResponse->toArray());
     }
@@ -57,6 +58,7 @@ class ClientGetStatusTest extends TestCase
         $response = $client->getStatus();
 
         $this->assertInstanceOf(GetStatusResponse::class, $response);
+        $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
     }
 }

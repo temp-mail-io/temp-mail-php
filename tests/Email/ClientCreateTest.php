@@ -31,6 +31,7 @@ class ClientCreateTest extends TestCase
         $response = $client->create($createRequest);
 
         $this->assertInstanceOf(CreateResponse::class, $response);
+        $this->assertNull($response->errorResponse);
         $this->assertEquals('test@example.com', $response->successResponse->email);
         $this->assertEquals(3600, $response->successResponse->ttl);
         $this->assertEquals(100, $response->successResponse->rateLimit->limit);
@@ -63,6 +64,7 @@ class ClientCreateTest extends TestCase
         $response = $client->create($createRequest);
 
         $this->assertInstanceOf(CreateResponse::class, $response);
+        $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
     }
 
@@ -90,6 +92,7 @@ class ClientCreateTest extends TestCase
         $response = $client->create($createRequest);
 
         $this->assertInstanceOf(CreateResponse::class, $response);
+        $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
     }
 }

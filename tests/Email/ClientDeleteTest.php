@@ -29,6 +29,7 @@ class ClientDeleteTest extends TestCase
         $response = $client->delete('test@example.com');
 
         $this->assertInstanceOf(DeleteResponse::class, $response);
+        $this->assertNull($response->errorResponse);
         $this->assertNotNull($response->successResponse);
     }
 
@@ -55,6 +56,7 @@ class ClientDeleteTest extends TestCase
         $response = $client->delete('test@example.com');
 
         $this->assertInstanceOf(DeleteResponse::class, $response);
+        $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
     }
 
@@ -81,6 +83,7 @@ class ClientDeleteTest extends TestCase
         $response = $client->delete('test@example.com');
 
         $this->assertInstanceOf(DeleteResponse::class, $response);
+        $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
     }
 }

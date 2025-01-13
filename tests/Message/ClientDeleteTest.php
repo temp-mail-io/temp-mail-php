@@ -1,61 +1,45 @@
 <?php
 
-namespace Tests\Domain;
+namespace Tests\Message;
 
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use TempMailIo\TempMailPhp\Domain\Client;
-use TempMailIo\TempMailPhp\Domain\Data\Response\GetAvailableDomainResponse;
+use TempMailIo\TempMailPhp\Message\Client;
+use TempMailIo\TempMailPhp\Message\Data\Response\DeleteResponse;
 use TempMailIo\TempMailPhp\RateLimitReader;
 
-class ClientGetAvailableDomainsTest extends TestCase
+class ClientDeleteTest extends TestCase
 {
-    public function testGetAvailableDomainsSuccess(): void
+    public function testDeleteSuccess(): void
     {
-        $domains = [
-            [
-                'name' => 'test1.com',
-                'type' => 'public',
-            ],
-            [
-                'name' => 'test2.com',
-                'type' => 'premium',
-            ],
-            [
-                'name' => 'test3.com',
-                'type' => 'custom',
-            ],
-        ];
-
         $mock = new MockHandler([
             new Response(200, [
                 'X-Ratelimit-Limit' => '100',
                 'X-Ratelimit-Remaining' => '99',
                 'X-Ratelimit-Used' => '1',
                 'X-Ratelimit-Reset' => '3600',
-            ], json_encode(['domains' => $domains]))
+            ], '')
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
         $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
-        $response = $client->getAvailableDomains();
+        $response = $client->delete('abc');
 
-        $this->assertInstanceOf(GetAvailableDomainResponse::class, $response);
-        $this->assertNull($response->errorResponse);
+        $this->assertInstanceOf(DeleteResponse::class, $response);
         $this->assertNotNull($response->successResponse);
-        $this->assertEquals($domains, $response->successResponse->toArray()['domains']);
+        $this->assertNull($response->errorResponse);
         $this->assertEquals([
             'limit' => '100',
             'remaining' => '99',
             'used' => '1',
             'reset' => '3600',
-        ], $response->successResponse->rateLimit->toArray());
+        ], $response->successResponse->toArray()['rate_limit']);
     }
 
-    public function testGetAvailableDomains400Error(): void
+    public function testDelete400Error(): void
     {
         $error = [
             'error' => [
@@ -75,14 +59,14 @@ class ClientGetAvailableDomainsTest extends TestCase
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
         $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
-        $response = $client->getAvailableDomains();
+        $response = $client->delete('abc');
 
-        $this->assertInstanceOf(GetAvailableDomainResponse::class, $response);
+        $this->assertInstanceOf(DeleteResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
     }
 
-    public function testGetAvailableDomains429Error(): void
+    public function testDelete429Error(): void
     {
         $error = [
             'error' => [
@@ -102,9 +86,9 @@ class ClientGetAvailableDomainsTest extends TestCase
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
         $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
-        $response = $client->getAvailableDomains();
+        $response = $client->delete('abc');
 
-        $this->assertInstanceOf(GetAvailableDomainResponse::class, $response);
+        $this->assertInstanceOf(DeleteResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
     }

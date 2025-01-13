@@ -67,6 +67,7 @@ class ClientGetMessagesTest extends TestCase
 
         $this->assertInstanceOf(GetMessagesResponse::class, $response);
         $this->assertNotNull($response->successResponse);
+        $this->assertNull($response->errorResponse);
         $this->assertEquals([
             'id' => 'abc',
             'from' => 'test@test.com',
@@ -125,6 +126,7 @@ class ClientGetMessagesTest extends TestCase
         $response = $client->getMessages('test@example.com');
 
         $this->assertInstanceOf(GetMessagesResponse::class, $response);
+        $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
     }
 
@@ -151,6 +153,7 @@ class ClientGetMessagesTest extends TestCase
         $response = $client->getMessages('test@example.com');
 
         $this->assertInstanceOf(GetMessagesResponse::class, $response);
+        $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
     }
 }
