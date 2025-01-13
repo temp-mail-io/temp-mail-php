@@ -18,8 +18,7 @@ class Client implements ClientInterface
     public function __construct(
         private readonly GuzzleClientInterface $guzzleClient,
         private readonly string                $apiKey,
-    )
-    {
+    ) {
     }
 
     /**

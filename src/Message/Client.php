@@ -26,8 +26,7 @@ class Client implements ClientInterface
         private readonly GuzzleClientInterface    $guzzleClient,
         private readonly RateLimitReaderInterface $rateLimitReader,
         private readonly string                   $apiKey,
-    )
-    {
+    ) {
     }
 
     /**
