@@ -18,7 +18,8 @@
     "phpstan/phpstan-strict-rules": "^2.0",
     "phpstan/extension-installer": "^1.4",
     "phpunit/phpunit": "^10.5",
-    "friendsofphp/php-cs-fixer": "^3.67"
+    "friendsofphp/php-cs-fixer": "^3.67",
+    "mikey179/vfsstream": "^1.6"
   },
   "config": {
     "allow-plugins": {

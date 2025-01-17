@@ -10,6 +10,9 @@ use TempMailIo\TempMailPhp\Message\Data\Response\DeleteResponse;
 use TempMailIo\TempMailPhp\Message\Data\Response\DownloadAttachmentResponse;
 use TempMailIo\TempMailPhp\Message\Data\Response\GetMessageResponse;
 use TempMailIo\TempMailPhp\Message\Data\Response\GetMessageSourceCodeResponse;
+use TempMailIo\TempMailPhp\Message\Exceptions\CloseFileException;
+use TempMailIo\TempMailPhp\Message\Exceptions\OpenFileException;
+use TempMailIo\TempMailPhp\Message\Exceptions\WriteFileException;
 
 interface ClientInterface
 {
@@ -26,7 +29,7 @@ interface ClientInterface
     public function delete(string $id): DeleteResponse;
 
     /**
-     * @throws GuzzleException|\ReflectionException|ServerException
+     * @throws GuzzleException|\ReflectionException|ServerException|OpenFileException|WriteFileException|CloseFileException
      */
-    public function downloadAttachment(string $id): DownloadAttachmentResponse;
+    public function downloadAttachment(string $id, string $filePathName): DownloadAttachmentResponse;
 }

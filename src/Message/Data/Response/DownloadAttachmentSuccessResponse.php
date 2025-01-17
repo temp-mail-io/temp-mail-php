@@ -8,5 +8,5 @@ use TempMailIo\TempMailPhp\GenericData\SuccessResponse;
 
 class DownloadAttachmentSuccessResponse extends SuccessResponse
 {
-    public string $string;
+    public string $filePathName;
 }

@@ -5,6 +5,7 @@ namespace Tests\Message;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use TempMailIo\TempMailPhp\Message\Client;
 use TempMailIo\TempMailPhp\Message\Data\Response\DownloadAttachmentResponse;
@@ -22,24 +23,29 @@ class ClientDownloadAttachmentTest extends TestCase
                 'X-Ratelimit-Remaining' => '99',
                 'X-Ratelimit-Used' => '1',
                 'X-Ratelimit-Reset' => '3600',
-            ], json_encode(['string' => $string]))
+                'Content-Type' => 'application/octet-stream'
+            ], $string)
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
         $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
-        $response = $client->downloadAttachment('abc');
+        $root = vfsStream::setup();
+        $file = vfsStream::newFile('file_path.txt')->at($root);
+
+        $response = $client->downloadAttachment('abc', $file->url());
 
         $this->assertInstanceOf(DownloadAttachmentResponse::class, $response);
         $this->assertNotNull($response->successResponse);
         $this->assertNull($response->errorResponse);
-        $this->assertEquals($string, $response->successResponse->string);
+        $this->assertEquals('vfs://root/file_path.txt', $response->successResponse->filePathName);
         $this->assertEquals([
             'limit' => '100',
             'remaining' => '99',
             'used' => '1',
             'reset' => '3600',
         ], $response->successResponse->toArray()['rate_limit']);
+        $this->assertStringEqualsFile($file->url(), $string);
     }
 
     public function testDownloadAttachment400Error(): void
@@ -62,7 +68,7 @@ class ClientDownloadAttachmentTest extends TestCase
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
         $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
-        $response = $client->downloadAttachment('abc');
+        $response = $client->downloadAttachment('abc', '/root/file_path.txt');
 
         $this->assertInstanceOf(DownloadAttachmentResponse::class, $response);
         $this->assertNull($response->successResponse);
@@ -89,7 +95,7 @@ class ClientDownloadAttachmentTest extends TestCase
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
         $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
-        $response = $client->downloadAttachment('abc');
+        $response = $client->downloadAttachment('abc', '/root/file_path.txt');
 
         $this->assertInstanceOf(DownloadAttachmentResponse::class, $response);
         $this->assertNull($response->successResponse);

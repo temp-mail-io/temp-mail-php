@@ -31,7 +31,7 @@ class Client implements ClientInterface
     /**
      * @throws GuzzleException|\ReflectionException|ServerException
      */
-    public function create(?CreateRequest $createRequest): CreateResponse
+    public function create(?CreateRequest $createRequest = null): CreateResponse
     {
         if ($createRequest === null) {
             $createRequest = new CreateRequest();

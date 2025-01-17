@@ -16,7 +16,7 @@ interface ClientInterface
     /**
      * @throws GuzzleException|\ReflectionException|ServerException
      */
-    public function create(?CreateRequest $createRequest): CreateResponse;
+    public function create(?CreateRequest $createRequest = null): CreateResponse;
 
     /**
      * @throws GuzzleException|\ReflectionException|ServerException

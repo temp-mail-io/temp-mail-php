@@ -67,14 +67,14 @@ abstract class Data
         foreach ($this->schema as $key => $type) {
             $snakeCaseKey = $this->toSnakeCase($key);
 
-            if (class_exists($type) && $incomingData[$snakeCaseKey] !== null) {
+            if (class_exists($type) && isset($incomingData[$snakeCaseKey])) {
                 /** @phpstan-ignore property.dynamicName */
                 $this->$key = (new $type())->fromArray($incomingData[$snakeCaseKey]);
 
                 continue;
             }
 
-            if (str_contains($type, '[]') && $incomingData[$snakeCaseKey] !== null) {
+            if (str_contains($type, '[]') && isset($incomingData[$snakeCaseKey])) {
                 $className = str_replace('[]', '', $type);
                 $className = ltrim($className, '\\');
                 /** @phpstan-ignore property.dynamicName */
