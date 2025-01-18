@@ -2,7 +2,23 @@
   "name": "temp-mail-io/temp-mail-php",
   "type": "library",
   "license": "MIT",
+  "keywords": [
+    "email",
+    "temp-mail",
+    "temp-email"
+  ],
+  "authors": [
+    {
+      "name": "Michael Kozii",
+      "email": "github@kozii.de"
+    }
+  ],
   "autoload": {
+    "psr-4": {
+      "TempMailIo\\TempMailPhp\\": "src/"
+    }
+  },
+  "autoload-dev": {
     "psr-4": {
       "TempMailIo\\TempMailPhp\\": "src/",
       "Tests\\": "tests/"

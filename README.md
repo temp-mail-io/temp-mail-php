@@ -1,5 +1,7 @@
-# Temp Mail Go Client
+# Temp Mail PHP Client
 [![PHP](https://github.com/temp-mail-io/temp-mail-php/actions/workflows/ci.yml/badge.svg)](https://github.com/temp-mail-io/temp-mail-php/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 The **official PHP Client** for [Temp Mail](https://temp-mail.io). This library provides developers a straightforward way to create and manage temporary email addresses, retrieve and delete messages, all via the Temp Mail API.
 
