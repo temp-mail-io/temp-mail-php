@@ -2,6 +2,7 @@
 
 namespace Tests\Message;
 
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
@@ -94,5 +95,19 @@ class ClientGetMessageSourceCodeTest extends TestCase
         $this->assertInstanceOf(GetMessageSourceCodeResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
+    }
+
+    public function testGetMessageSourceCode502Error(): void
+    {
+        $this->expectException(ServerException::class);
+
+        $mock = new MockHandler([
+            new Response(502, [], 'Bad Gateway')
+        ]);
+        $handlerStack = HandlerStack::create($mock);
+        $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
+        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+
+        $client->getMessageSourceCode('abc');
     }
 }

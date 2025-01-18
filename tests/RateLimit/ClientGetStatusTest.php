@@ -2,6 +2,7 @@
 
 namespace Tests\RateLimit;
 
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
@@ -60,5 +61,19 @@ class ClientGetStatusTest extends TestCase
         $this->assertInstanceOf(GetStatusResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
+    }
+
+    public function testGetStatus502Error(): void
+    {
+        $this->expectException(ServerException::class);
+
+        $mock = new MockHandler([
+            new Response(502, [], 'Bad Gateway')
+        ]);
+        $handlerStack = HandlerStack::create($mock);
+        $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
+        $client = new Client($guzzleClient, 'test-api-key');
+
+        $client->getStatus();
     }
 }

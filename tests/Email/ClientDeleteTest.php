@@ -2,6 +2,7 @@
 
 namespace Tests\Email;
 
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
@@ -33,7 +34,7 @@ class ClientDeleteTest extends TestCase
         $this->assertNotNull($response->successResponse);
     }
 
-    public function testCreate400Error(): void
+    public function testDelete400Error(): void
     {
         $error = [
             'error' => [
@@ -60,7 +61,7 @@ class ClientDeleteTest extends TestCase
         $this->assertEquals($error, $response->errorResponse->toArray());
     }
 
-    public function testCreate429Error(): void
+    public function testDelete429Error(): void
     {
         $error = [
             'error' => [
@@ -85,5 +86,19 @@ class ClientDeleteTest extends TestCase
         $this->assertInstanceOf(DeleteResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
+    }
+
+    public function testDelete502Error(): void
+    {
+        $this->expectException(ServerException::class);
+
+        $mock = new MockHandler([
+            new Response(502, [], 'Bad Gateway')
+        ]);
+        $handlerStack = HandlerStack::create($mock);
+        $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
+        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+
+        $client->delete('abc');
     }
 }
