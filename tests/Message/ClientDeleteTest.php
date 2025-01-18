@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use TempMailIo\TempMailPhp\Message\Client;
 use TempMailIo\TempMailPhp\Message\Data\Response\DeleteResponse;
+use TempMailIo\TempMailPhp\Message\File\Writer;
 use TempMailIo\TempMailPhp\RateLimitReader;
 
 class ClientDeleteTest extends TestCase
@@ -25,7 +26,7 @@ class ClientDeleteTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $response = $client->delete('abc');
 
@@ -58,7 +59,7 @@ class ClientDeleteTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $response = $client->delete('abc');
 
@@ -85,7 +86,7 @@ class ClientDeleteTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $response = $client->delete('abc');
 
@@ -103,7 +104,7 @@ class ClientDeleteTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $client->delete('abc');
     }

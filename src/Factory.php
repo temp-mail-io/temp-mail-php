@@ -9,6 +9,7 @@ use TempMailIo\TempMailPhp\Email\Client as EmailClient;
 use TempMailIo\TempMailPhp\Email\ClientInterface as EmailClientInterface;
 use TempMailIo\TempMailPhp\Domain\Client as DomainClient;
 use TempMailIo\TempMailPhp\Domain\ClientInterface as DomainClientInterface;
+use TempMailIo\TempMailPhp\Message\File\Writer as FileWriter;
 use TempMailIo\TempMailPhp\RateLimit\Client as RateLimitClient;
 use TempMailIo\TempMailPhp\RateLimit\ClientInterface as RateLimitClientInterface;
 use TempMailIo\TempMailPhp\Message\Client as MessageClient;
@@ -33,6 +34,6 @@ class Factory
 
     public static function createMessageClient(string $apiKey): MessageClientInterface
     {
-        return new MessageClient(new Client(), new RateLimitReader(), $apiKey);
+        return new MessageClient(new Client(), new RateLimitReader(), new FileWriter(), $apiKey);
     }
 }

@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use TempMailIo\TempMailPhp\Message\Client;
 use TempMailIo\TempMailPhp\Message\Data\Response\GetMessageSourceCodeResponse;
+use TempMailIo\TempMailPhp\Message\File\Writer;
 use TempMailIo\TempMailPhp\RateLimitReader;
 
 class ClientGetMessageSourceCodeTest extends TestCase
@@ -27,7 +28,7 @@ class ClientGetMessageSourceCodeTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $response = $client->getMessageSourceCode('abc');
 
@@ -61,7 +62,7 @@ class ClientGetMessageSourceCodeTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $response = $client->getMessageSourceCode('abc');
 
@@ -88,7 +89,7 @@ class ClientGetMessageSourceCodeTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $response = $client->getMessageSourceCode('abc');
 
@@ -106,7 +107,7 @@ class ClientGetMessageSourceCodeTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $client->getMessageSourceCode('abc');
     }

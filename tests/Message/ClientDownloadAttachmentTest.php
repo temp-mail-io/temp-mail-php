@@ -10,6 +10,7 @@ use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use TempMailIo\TempMailPhp\Message\Client;
 use TempMailIo\TempMailPhp\Message\Data\Response\DownloadAttachmentResponse;
+use TempMailIo\TempMailPhp\Message\File\Writer;
 use TempMailIo\TempMailPhp\RateLimitReader;
 
 class ClientDownloadAttachmentTest extends TestCase
@@ -29,7 +30,7 @@ class ClientDownloadAttachmentTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $root = vfsStream::setup();
         $file = vfsStream::newFile('file_path.txt')->at($root);
@@ -67,7 +68,7 @@ class ClientDownloadAttachmentTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $response = $client->downloadAttachment('abc', '/root/file_path.txt');
 
@@ -94,7 +95,7 @@ class ClientDownloadAttachmentTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $response = $client->downloadAttachment('abc', '/root/file_path.txt');
 
@@ -112,7 +113,7 @@ class ClientDownloadAttachmentTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-        $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
+        $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $client->downloadAttachment('abc', '/root/file_path.txt');
     }

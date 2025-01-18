@@ -14,7 +14,7 @@ class Message extends Data
 
     public string $to;
 
-    public array $cc;
+    public array $cc = [];
 
     public string $subject;
 
