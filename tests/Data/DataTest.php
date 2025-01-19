@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Data;
 
 use PHPUnit\Framework\TestCase;
+use TempMailIo\TempMailPhp\Email\Data\Request\DomainType;
 
 class DataTest extends TestCase
 {
@@ -100,5 +101,24 @@ class DataTest extends TestCase
 
         $this->assertEquals($incomingData, $data->toArray());
         $this->assertEquals(['key1' => 'value1', 'key2' => 'value2'], $data->data[0]->toArray());
+    }
+
+    public function testFromArrayWithEnum()
+    {
+        $data = new ExtendedDataWithEnum();
+        $data->fromArray(['key1' => 'value1', 'key2' => 'value2', 'domain_type' => DomainType::PUBLIC]);
+
+        $this->assertEquals('value1', $data->key1);
+        $this->assertEquals('value2', $data->key2);
+        $this->assertEquals(DomainType::PUBLIC, $data->domainType);
+    }
+
+    public function testToArrayWithEnum()
+    {
+        $data = new ExtendedDataWithEnum();
+        $incomingData = ['key1' => 'value1', 'key2' => 'value2', 'domain_type' => DomainType::PUBLIC];
+        $data->fromArray($incomingData);
+
+        $this->assertEquals($incomingData, $data->toArray());
     }
 }

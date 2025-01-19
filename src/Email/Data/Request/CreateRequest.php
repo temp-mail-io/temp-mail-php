@@ -9,6 +9,8 @@ use TempMailIo\TempMailPhp\Data;
 final class CreateRequest extends Data
 {
     public ?string $email = null;
+
     public ?string $domain = null;
-    public ?string $domainType = null;
+
+    public ?DomainType $domainType = null;
 }

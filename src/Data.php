@@ -41,7 +41,7 @@ abstract class Data
         foreach ($this->schema as $key => $type) {
             $snakeCaseKey = $this->toSnakeCase($key);
 
-            if (class_exists($type)) {
+            if (class_exists($type) && is_subclass_of($type, Data::class)) {
                 /** @phpstan-ignore property.dynamicName */
                 $data[$snakeCaseKey] = $this->$key->toArray();
 
@@ -67,7 +67,7 @@ abstract class Data
         foreach ($this->schema as $key => $type) {
             $snakeCaseKey = $this->toSnakeCase($key);
 
-            if (class_exists($type) && isset($incomingData[$snakeCaseKey])) {
+            if (class_exists($type) && is_subclass_of($type, Data::class) && isset($incomingData[$snakeCaseKey])) {
                 /** @phpstan-ignore property.dynamicName */
                 $this->$key = (new $type())->fromArray($incomingData[$snakeCaseKey]);
 
