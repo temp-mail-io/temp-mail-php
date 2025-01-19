@@ -9,10 +9,10 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
 use TempMailIo\TempMailPhp\Constants;
+use TempMailIo\TempMailPhp\GenericData\SuccessResponse;
 use TempMailIo\TempMailPhp\Headers;
 use TempMailIo\TempMailPhp\RateLimit\Data\Response\GetStatusResponse;
 use TempMailIo\TempMailPhp\GenericData\ErrorResponse;
-use TempMailIo\TempMailPhp\RateLimit\Data\Response\GetStatusSuccessResponse;
 
 class Client implements ClientInterface
 {
@@ -35,8 +35,10 @@ class Client implements ClientInterface
             ]);
 
             if ($response->getStatusCode() === 200) {
-                $getStatusResponse->successResponse = GetStatusSuccessResponse::create()
-                    ->fromArray(json_decode($response->getBody()->getContents(), true));
+                $getStatusResponse->successResponse = SuccessResponse::create()
+                    ->fromArray([
+                        'rate_limit' => json_decode($response->getBody()->getContents(), true)
+                    ]);
 
                 return $getStatusResponse;
             }

@@ -6,10 +6,11 @@ namespace TempMailIo\TempMailPhp\RateLimit\Data\Response;
 
 use TempMailIo\TempMailPhp\Data;
 use TempMailIo\TempMailPhp\GenericData\ErrorResponse;
+use TempMailIo\TempMailPhp\GenericData\SuccessResponse;
 
 class GetStatusResponse extends Data
 {
-    public ?GetStatusSuccessResponse $successResponse = null;
+    public ?SuccessResponse $successResponse = null;
 
     public ?ErrorResponse $errorResponse = null;
 }

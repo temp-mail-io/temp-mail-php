@@ -42,7 +42,7 @@ class ClientGetStatusTest extends TestCase
         $this->assertInstanceOf(GetStatusResponse::class, $response);
         $this->assertNull($response->errorResponse);
         $this->assertNotNull($response->successResponse);
-        $this->assertEquals($status, $response->successResponse->toArray());
+        $this->assertEquals($status, $response->successResponse->rateLimit->toArray());
     }
 
     public function testGetStatus400Error(): void
