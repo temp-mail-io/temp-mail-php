@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
 use TempMailIo\TempMailPhp\Constants;
+use TempMailIo\TempMailPhp\Headers;
 use TempMailIo\TempMailPhp\RateLimit\Data\Response\GetStatusResponse;
 use TempMailIo\TempMailPhp\GenericData\ErrorResponse;
 use TempMailIo\TempMailPhp\RateLimit\Data\Response\GetStatusSuccessResponse;
@@ -30,11 +31,7 @@ class Client implements ClientInterface
 
         try {
             $response = $this->guzzleClient->request('GET', Constants::API_V1_URL . '/rate_limit', [
-                'headers' => [
-                    Constants::API_KEY_HEADER => $this->apiKey,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                ],
+                'headers' => Headers::getDefaultJsonRequestHeaders($this->apiKey),
             ]);
 
             if ($response->getStatusCode() === 200) {

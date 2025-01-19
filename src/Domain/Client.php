@@ -12,6 +12,7 @@ use TempMailIo\TempMailPhp\Constants;
 use TempMailIo\TempMailPhp\Domain\Data\Response\GetAvailableDomainResponse;
 use TempMailIo\TempMailPhp\Domain\Data\Response\GetAvailableDomainsSuccessResponse;
 use TempMailIo\TempMailPhp\GenericData\ErrorResponse;
+use TempMailIo\TempMailPhp\Headers;
 use TempMailIo\TempMailPhp\RateLimitReaderInterface;
 
 class Client implements ClientInterface
@@ -32,11 +33,7 @@ class Client implements ClientInterface
 
         try {
             $response = $this->guzzleClient->request('GET', Constants::API_V1_URL . '/domains', [
-                'headers' => [
-                    Constants::API_KEY_HEADER => $this->apiKey,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                ],
+                'headers' => Headers::getDefaultJsonRequestHeaders($this->apiKey),
             ]);
 
             if ($response->getStatusCode() === 200) {

@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use TempMailIo\TempMailPhp\Domain\Client;
 use TempMailIo\TempMailPhp\Domain\Data\Response\GetAvailableDomainResponse;
 use TempMailIo\TempMailPhp\RateLimitReader;
+use Tests\HeadersHelper;
 
 class ClientGetAvailableDomainsTest extends TestCase
 {
@@ -43,6 +44,14 @@ class ClientGetAvailableDomainsTest extends TestCase
         $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
         $response = $client->getAvailableDomains();
+
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
 
         $this->assertInstanceOf(GetAvailableDomainResponse::class, $response);
         $this->assertNull($response->errorResponse);

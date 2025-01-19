@@ -12,6 +12,7 @@ use TempMailIo\TempMailPhp\Message\Client;
 use TempMailIo\TempMailPhp\Message\Data\Response\DownloadAttachmentResponse;
 use TempMailIo\TempMailPhp\Message\File\Writer;
 use TempMailIo\TempMailPhp\RateLimitReader;
+use Tests\HeadersHelper;
 
 class ClientDownloadAttachmentTest extends TestCase
 {
@@ -36,6 +37,14 @@ class ClientDownloadAttachmentTest extends TestCase
         $file = vfsStream::newFile('file_path.txt')->at($root);
 
         $response = $client->downloadAttachment('abc', $file->url());
+
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/octet-stream',
+            'Accept' => 'application/octet-stream',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
 
         $this->assertInstanceOf(DownloadAttachmentResponse::class, $response);
         $this->assertNotNull($response->successResponse);
@@ -72,6 +81,14 @@ class ClientDownloadAttachmentTest extends TestCase
 
         $response = $client->downloadAttachment('abc', '/root/file_path.txt');
 
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/octet-stream',
+            'Accept' => 'application/octet-stream',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
+
         $this->assertInstanceOf(DownloadAttachmentResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
@@ -99,6 +116,14 @@ class ClientDownloadAttachmentTest extends TestCase
 
         $response = $client->downloadAttachment('abc', '/root/file_path.txt');
 
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/octet-stream',
+            'Accept' => 'application/octet-stream',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
+
         $this->assertInstanceOf(DownloadAttachmentResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
@@ -116,5 +141,13 @@ class ClientDownloadAttachmentTest extends TestCase
         $client = new Client($guzzleClient, new RateLimitReader(), new Writer(), 'test-api-key');
 
         $client->downloadAttachment('abc', '/root/file_path.txt');
+
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/octet-stream',
+            'Accept' => 'application/octet-stream',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
     }
 }

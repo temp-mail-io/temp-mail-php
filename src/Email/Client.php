@@ -17,6 +17,7 @@ use TempMailIo\TempMailPhp\Email\Data\Response\GetMessagesResponse;
 use TempMailIo\TempMailPhp\Email\Data\Response\GetMessagesSuccessResponse;
 use TempMailIo\TempMailPhp\GenericData\ErrorResponse;
 use TempMailIo\TempMailPhp\GenericData\SuccessResponse;
+use TempMailIo\TempMailPhp\Headers;
 use TempMailIo\TempMailPhp\RateLimitReaderInterface;
 
 class Client implements ClientInterface
@@ -41,11 +42,7 @@ class Client implements ClientInterface
 
         try {
             $response = $this->guzzleClient->request('POST', Constants::API_V1_URL . '/emails', [
-                'headers' => [
-                    Constants::API_KEY_HEADER => $this->apiKey,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                ],
+                'headers' => Headers::getDefaultJsonRequestHeaders($this->apiKey),
                 'json' => $createRequest->toArray(),
             ]);
 
@@ -77,11 +74,7 @@ class Client implements ClientInterface
 
         try {
             $response = $this->guzzleClient->request('GET', Constants::API_V1_URL . "/emails/{$email}/messages", [
-                'headers' => [
-                    Constants::API_KEY_HEADER => $this->apiKey,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                ],
+                'headers' => Headers::getDefaultJsonRequestHeaders($this->apiKey),
             ]);
 
             if ($response->getStatusCode() === 200) {
@@ -112,11 +105,7 @@ class Client implements ClientInterface
 
         try {
             $response = $this->guzzleClient->request('DELETE', Constants::API_V1_URL . "/emails/{$email}", [
-                'headers' => [
-                    Constants::API_KEY_HEADER => $this->apiKey,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                ]
+                'headers' => Headers::getDefaultJsonRequestHeaders($this->apiKey),
             ]);
 
             if ($response->getStatusCode() === 200) {

@@ -8,10 +8,10 @@ use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
-use GuzzleHttp\RequestOptions;
 use TempMailIo\TempMailPhp\Constants;
 use TempMailIo\TempMailPhp\GenericData\ErrorResponse;
 use TempMailIo\TempMailPhp\GenericData\SuccessResponse;
+use TempMailIo\TempMailPhp\Headers;
 use TempMailIo\TempMailPhp\Message\Data\Response\DeleteResponse;
 use TempMailIo\TempMailPhp\Message\Data\Response\DownloadAttachmentResponse;
 use TempMailIo\TempMailPhp\Message\Data\Response\DownloadAttachmentSuccessResponse;
@@ -44,11 +44,7 @@ class Client implements ClientInterface
 
         try {
             $response = $this->guzzleClient->request('GET', Constants::API_V1_URL . "/messages/{$id}", [
-                'headers' => [
-                    Constants::API_KEY_HEADER => $this->apiKey,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                ],
+                'headers' => Headers::getDefaultJsonRequestHeaders($this->apiKey),
             ]);
 
             if ($response->getStatusCode() === 200) {
@@ -76,11 +72,7 @@ class Client implements ClientInterface
 
         try {
             $response = $this->guzzleClient->request('GET', Constants::API_V1_URL . "/messages/{$id}/source_code", [
-                'headers' => [
-                    Constants::API_KEY_HEADER => $this->apiKey,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                ],
+                'headers' => Headers::getDefaultJsonRequestHeaders($this->apiKey),
             ]);
 
             if ($response->getStatusCode() === 200) {
@@ -111,11 +103,7 @@ class Client implements ClientInterface
 
         try {
             $response = $this->guzzleClient->request('DELETE', Constants::API_V1_URL . "/messages/{$id}", [
-                'headers' => [
-                    Constants::API_KEY_HEADER => $this->apiKey,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                ]
+                'headers' => Headers::getDefaultJsonRequestHeaders($this->apiKey),
             ]);
 
             if ($response->getStatusCode() === 200) {
@@ -145,12 +133,7 @@ class Client implements ClientInterface
 
         try {
             $response = $this->guzzleClient->request('GET', Constants::API_V1_URL . "/attachments/{$id}", [
-                'headers' => [
-                    Constants::API_KEY_HEADER => $this->apiKey,
-                    'Content-Type' => 'application/octet-stream',
-                    'Accept' => 'application/octet-stream',
-                    RequestOptions::STREAM => true,
-                ],
+                'headers' => Headers::getDefaultOctetStreamHeaders($this->apiKey),
             ]);
 
             if ($response->getStatusCode() === 200) {

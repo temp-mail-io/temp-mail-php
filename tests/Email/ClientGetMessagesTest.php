@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use TempMailIo\TempMailPhp\Email\Client;
 use TempMailIo\TempMailPhp\Email\Data\Response\GetMessagesResponse;
 use TempMailIo\TempMailPhp\RateLimitReader;
+use Tests\HeadersHelper;
 
 class ClientGetMessagesTest extends TestCase
 {
@@ -65,6 +66,14 @@ class ClientGetMessagesTest extends TestCase
         $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
         $response = $client->getMessages('test@example.com');
+
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
 
         $this->assertInstanceOf(GetMessagesResponse::class, $response);
         $this->assertNotNull($response->successResponse);
@@ -126,6 +135,14 @@ class ClientGetMessagesTest extends TestCase
 
         $response = $client->getMessages('test@example.com');
 
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
+
         $this->assertInstanceOf(GetMessagesResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
@@ -153,6 +170,14 @@ class ClientGetMessagesTest extends TestCase
 
         $response = $client->getMessages('test@example.com');
 
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
+
         $this->assertInstanceOf(GetMessagesResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
@@ -170,5 +195,13 @@ class ClientGetMessagesTest extends TestCase
         $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
         $client->getMessages('test@example.com');
+
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
     }
 }

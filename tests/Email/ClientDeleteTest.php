@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use TempMailIo\TempMailPhp\Email\Client;
 use TempMailIo\TempMailPhp\Email\Data\Response\DeleteResponse;
 use TempMailIo\TempMailPhp\RateLimitReader;
+use Tests\HeadersHelper;
 
 class ClientDeleteTest extends TestCase
 {
@@ -28,6 +29,14 @@ class ClientDeleteTest extends TestCase
         $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
         $response = $client->delete('test@example.com');
+
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
 
         $this->assertInstanceOf(DeleteResponse::class, $response);
         $this->assertNull($response->errorResponse);
@@ -56,6 +65,14 @@ class ClientDeleteTest extends TestCase
 
         $response = $client->delete('test@example.com');
 
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
+
         $this->assertInstanceOf(DeleteResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
@@ -83,6 +100,14 @@ class ClientDeleteTest extends TestCase
 
         $response = $client->delete('test@example.com');
 
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
+
         $this->assertInstanceOf(DeleteResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
@@ -100,5 +125,13 @@ class ClientDeleteTest extends TestCase
         $client = new Client($guzzleClient, new RateLimitReader(), 'test-api-key');
 
         $client->delete('abc');
+
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
     }
 }

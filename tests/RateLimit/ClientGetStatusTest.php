@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use TempMailIo\TempMailPhp\RateLimit\Client;
 use TempMailIo\TempMailPhp\RateLimit\Data\Response\GetStatusResponse;
+use Tests\HeadersHelper;
 
 class ClientGetStatusTest extends TestCase
 {
@@ -29,6 +30,14 @@ class ClientGetStatusTest extends TestCase
         $client = new Client($guzzleClient, 'test-api-key');
 
         $response = $client->getStatus();
+
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
 
         $this->assertInstanceOf(GetStatusResponse::class, $response);
         $this->assertNull($response->errorResponse);
@@ -58,6 +67,14 @@ class ClientGetStatusTest extends TestCase
 
         $response = $client->getStatus();
 
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
+
         $this->assertInstanceOf(GetStatusResponse::class, $response);
         $this->assertNull($response->successResponse);
         $this->assertEquals($error, $response->errorResponse->toArray());
@@ -75,5 +92,13 @@ class ClientGetStatusTest extends TestCase
         $client = new Client($guzzleClient, 'test-api-key');
 
         $client->getStatus();
+
+        $this->assertEqualsCanonicalizing([
+            'Host' => 'api.temp-mail.io',
+            'X-API-Key' => 'test-api-key',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'User-Agent' => 'temp-mail-php/v1.0.0',
+        ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
     }
 }
