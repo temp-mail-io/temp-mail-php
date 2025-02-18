@@ -35,7 +35,7 @@ class ClientDeleteTest extends TestCase
             'X-API-Key' => 'test-api-key',
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-            'User-Agent' => 'temp-mail-php/v1.0.0',
+            'User-Agent' => 'temp-mail-php/v0.2.1',
         ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
 
         $this->assertInstanceOf(DeleteResponse::class, $response);
@@ -70,7 +70,7 @@ class ClientDeleteTest extends TestCase
             'X-API-Key' => 'test-api-key',
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-            'User-Agent' => 'temp-mail-php/v1.0.0',
+            'User-Agent' => 'temp-mail-php/v0.2.1',
         ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
 
         $this->assertInstanceOf(DeleteResponse::class, $response);
@@ -105,7 +105,7 @@ class ClientDeleteTest extends TestCase
             'X-API-Key' => 'test-api-key',
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-            'User-Agent' => 'temp-mail-php/v1.0.0',
+            'User-Agent' => 'temp-mail-php/v0.2.1',
         ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
 
         $this->assertInstanceOf(DeleteResponse::class, $response);
@@ -131,7 +131,7 @@ class ClientDeleteTest extends TestCase
             'X-API-Key' => 'test-api-key',
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-            'User-Agent' => 'temp-mail-php/v1.0.0',
+            'User-Agent' => 'temp-mail-php/v0.2.1',
         ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
     }
 }

@@ -43,7 +43,7 @@ class ClientDownloadAttachmentTest extends TestCase
             'X-API-Key' => 'test-api-key',
             'Content-Type' => 'application/octet-stream',
             'Accept' => 'application/octet-stream',
-            'User-Agent' => 'temp-mail-php/v1.0.0',
+            'User-Agent' => 'temp-mail-php/v0.2.1',
         ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
 
         $this->assertInstanceOf(DownloadAttachmentResponse::class, $response);
@@ -86,7 +86,7 @@ class ClientDownloadAttachmentTest extends TestCase
             'X-API-Key' => 'test-api-key',
             'Content-Type' => 'application/octet-stream',
             'Accept' => 'application/octet-stream',
-            'User-Agent' => 'temp-mail-php/v1.0.0',
+            'User-Agent' => 'temp-mail-php/v0.2.1',
         ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
 
         $this->assertInstanceOf(DownloadAttachmentResponse::class, $response);
@@ -121,7 +121,7 @@ class ClientDownloadAttachmentTest extends TestCase
             'X-API-Key' => 'test-api-key',
             'Content-Type' => 'application/octet-stream',
             'Accept' => 'application/octet-stream',
-            'User-Agent' => 'temp-mail-php/v1.0.0',
+            'User-Agent' => 'temp-mail-php/v0.2.1',
         ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
 
         $this->assertInstanceOf(DownloadAttachmentResponse::class, $response);
@@ -147,7 +147,7 @@ class ClientDownloadAttachmentTest extends TestCase
             'X-API-Key' => 'test-api-key',
             'Content-Type' => 'application/octet-stream',
             'Accept' => 'application/octet-stream',
-            'User-Agent' => 'temp-mail-php/v1.0.0',
+            'User-Agent' => 'temp-mail-php/v0.2.1',
         ], HeadersHelper::getHeadersFromRequest($mock->getLastRequest()));
     }
 }
