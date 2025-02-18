@@ -18,5 +18,5 @@ interface Constants
 
     public const RATE_RESET_HEADER = 'X-Ratelimit-Reset';
 
-    public const USER_AGENT_HEADER_VALUE = 'temp-mail-php/v1.0.0';
+    public const USER_AGENT_HEADER_VALUE = 'temp-mail-php/v0.2.1';
 }
