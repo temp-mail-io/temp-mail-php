@@ -1,4 +1,5 @@
 # Temp Mail PHP Client
+![Packagist Version](https://img.shields.io/packagist/v/temp-mail-io/temp-mail-php)
 [![PHP](https://github.com/temp-mail-io/temp-mail-php/actions/workflows/ci.yml/badge.svg)](https://github.com/temp-mail-io/temp-mail-php/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
